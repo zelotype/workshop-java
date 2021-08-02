@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDBWithSuccess extends UserDB {
+class UserDBWithSuccess implements UserDB {
     @Override
     public String getNameByID(int id) {
         return "Toon";
     }
 }
 
-class UserDBWithIDNotFound extends UserDB {
+class UserDBWithIDNotFound implements UserDB {
     @Override
     public String getNameByID(int id) {
         throw new UserNotFoundException("ID=" + id + " not found");

@@ -5,15 +5,13 @@ public class Hello {
         return "Hello, " + name;
     }
 
-    UserDB userDB = new UserDB();
+    UserDB userDB;
 
     public String workWithDB(int id) {
         return userDB.getNameByID(id);
     }
 }
 
-class UserDB {
-    public String getNameByID(int id) {
-        throw new RuntimeException("DB disconnected");
-    }
+interface UserDB {
+    public String getNameByID(int id) throws RuntimeException;
 }
