@@ -47,6 +47,7 @@ class HelloTest {
         };
 
         Exception exception = assertThrows(UserNotFoundException.class, () -> hello.workWithDB(2));
+        
         assertEquals("ID=2 not found", exception.getMessage());
     }
 }
