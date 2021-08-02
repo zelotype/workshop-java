@@ -5,6 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class UserDBWithSuccess extends UserDB {
+    @Override
+    public String getNameByID(int id) {
+        return "Toon";
+    }
+}
+
 class HelloTest {
 
     @Test
@@ -18,15 +25,10 @@ class HelloTest {
     }
 
     @Test
-    @DisplayName("Test with DB : success case (I = Isolate/Independent)")
+    @DisplayName("Test with DB : Success case (I = Isolate/Independent)")
     public void case02() {
         Hello hello = new Hello();
-        hello.userDB = new UserDB() {
-            @Override
-            public String getNameByID(int id) {
-                return "Toon";
-            }
-        };
+        hello.userDB = new UserDBWithSuccess();
 
         String name = hello.workWithDB(1);
 
@@ -34,7 +36,7 @@ class HelloTest {
     }
 
     @Test
-    @DisplayName("Test with DB fail case with ID not found")
+    @DisplayName("Test with DB : Fail case with ID not found")
     public void case03() {
         Hello hello = new Hello();
         hello.userDB = new UserDB() {
