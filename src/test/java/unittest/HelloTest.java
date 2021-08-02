@@ -12,6 +12,13 @@ class UserDBWithSuccess extends UserDB {
     }
 }
 
+class UserDBWithIDNotFound extends UserDB {
+    @Override
+    public String getNameByID(int id) {
+        throw new UserNotFoundException("ID=" + id + " not found");
+    }
+}
+
 class HelloTest {
 
     @Test
@@ -39,15 +46,10 @@ class HelloTest {
     @DisplayName("Test with DB : Fail case with ID not found")
     public void case03() {
         Hello hello = new Hello();
-        hello.userDB = new UserDB() {
-            @Override
-            public String getNameByID(int id) {
-                throw new UserNotFoundException("ID=" + id + " not found");
-            }
-        };
+        hello.userDB = new UserDBWithIDNotFound();
 
         Exception exception = assertThrows(UserNotFoundException.class, () -> hello.workWithDB(2));
-        
+
         assertEquals("ID=2 not found", exception.getMessage());
     }
 }
