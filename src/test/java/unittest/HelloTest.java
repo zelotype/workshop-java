@@ -8,12 +8,43 @@ import static org.junit.jupiter.api.Assertions.*;
 class HelloTest {
 
     @Test
-    @DisplayName("First case test")
+    @DisplayName("Greeting test case")
     public void case01() {
         Hello hello = new Hello();
 
         String actualResult = hello.hi("Toon");
 
         assertEquals("Hello, Toon", actualResult);
+    }
+
+    @Test
+    @DisplayName("Test with DB : success case (I = Isolate/Independent)")
+    public void case02() {
+        Hello hello = new Hello();
+        hello.userDB = new UserDB() {
+            @Override
+            public String getNameByID(int id) {
+                return "Toon";
+            }
+        };
+
+        String name = hello.workWithDB(1);
+
+        assertEquals("Toon", name);
+    }
+
+    @Test
+    @DisplayName("Test with DB fail case with ID not found")
+    public void case03() {
+        Hello hello = new Hello();
+        hello.userDB = new UserDB() {
+            @Override
+            public String getNameByID(int id) {
+                throw new UserNotFoundException("ID=" + id + " not found");
+            }
+        };
+
+        Exception exception = assertThrows(UserNotFoundException.class, () -> hello.workWithDB(2));
+        assertEquals("ID=2 not found", exception.getMessage());
     }
 }
