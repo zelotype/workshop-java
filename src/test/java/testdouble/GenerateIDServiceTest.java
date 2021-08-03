@@ -36,7 +36,11 @@ class SpyRandom extends Random {
 
     @Override
     public int nextInt(int bound) {
-        this.counter++;
+        if (bound == 10) {
+            this.counter++;
+        } else {
+            fail("Bound not accept");
+        }
         return 100000;
     }
 
