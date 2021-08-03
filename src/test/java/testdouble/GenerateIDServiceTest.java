@@ -29,8 +29,6 @@ class GenerateIDServiceTest {
         service.get(null);
         spyRandom.verify(1);
     }
-
-
 }
 
 class SpyRandom extends Random {
